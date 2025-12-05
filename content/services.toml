@@ -3,7 +3,7 @@ title = "Services"
 description = "Professional services and community involvement."
 
 [[items]]
-title = "Reviewer"
-subtitle = "Journal Name"
-date = "2024"
-content = "Reviewed papers for..."
+title = "Visiting Student"
+subtitle = "Institute of Computing Technology, Chinese Academy of Sciences"
+date = "2023"
+content = "Investigated the application and importance of sparse matrices in AI compilers"

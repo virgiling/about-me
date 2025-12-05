@@ -7,7 +7,8 @@ import {
     EnvelopeIcon,
     AcademicCapIcon,
     HeartIcon,
-    MapPinIcon
+    MapPinIcon,
+    GlobeAltIcon
 } from '@heroicons/react/24/outline';
 import { MapPinIcon as MapPinSolidIcon, EnvelopeIcon as EnvelopeSolidIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
@@ -26,11 +27,12 @@ const OrcidIcon = ({ className }: { className?: string }) => (
     </svg>
 );
 
+
 interface ProfileProps {
     author: SiteConfig['author'];
     social: SiteConfig['social'];
     features: SiteConfig['features'];
-    researchInterests?: string[];
+    researchInterests?: [string, string][];
 }
 
 export default function Profile({ author, social, features, researchInterests }: ProfileProps) {
@@ -73,6 +75,11 @@ export default function Profile({ author, social, features, researchInterests }:
             href: `mailto:${social.email}`,
             icon: EnvelopeIcon,
             isEmail: true,
+        }] : []),
+        ...(social.blog ? [{
+            name: 'Blogs',
+            href: `https://${social.blog}/`,
+            icon: GlobeAltIcon,
         }] : []),
         ...(social.location || social.location_details ? [{
             name: 'Location',
@@ -307,7 +314,9 @@ export default function Profile({ author, social, features, researchInterests }:
                     <h3 className="font-semibold text-primary mb-3">Research Interests</h3>
                     <div className="space-y-2 text-sm text-neutral-700 dark:text-neutral-500">
                         {researchInterests.map((interest, index) => (
-                            <div key={index}>{interest}</div>
+                            <div key={index}>
+                                {interest[1] && interest[1].length > 0 ? (<a href={interest[1]}>{interest[0]}</a>) : interest[0]}
+                            </div>
                         ))}
                     </div>
                 </div>

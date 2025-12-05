@@ -37,7 +37,7 @@ export default function Home() {
 
   // Always load about page config for profile info
   const aboutConfig = getPageConfig('about');
-  const researchInterests = (aboutConfig as { profile?: { research_interests?: string[] } })?.profile?.research_interests;
+  const researchInterests = (aboutConfig as { profile?: { research_interests?: [string, string][] } })?.profile?.research_interests;
 
   // Helper function to process sections (for about page)
   const processSections = (sections: SectionConfig[]) => {

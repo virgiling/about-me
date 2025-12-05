@@ -3,9 +3,18 @@ title = "About"
 
 [profile]
 research_interests = [
-  "Computational Physics",
-  "Mathematical Principles",
-  "Proof of Theorems"
+  [
+    "Automated Reasoning",
+    "https://en.wikipedia.org/wiki/Automated_reasoning",
+  ],
+  [
+    "SAT",
+    "https://en.wikipedia.org/wiki/Boolean_satisfiability_problem",
+  ],
+  [
+    "Combination & Optimization Problem",
+    "https://en.wikipedia.org/wiki/Combinatorial_optimization",
+  ],
 ]
 
 [[sections]]
@@ -26,4 +35,3 @@ id = "news"
 type = "list"
 title = "News"
 source = "news.toml"
-
