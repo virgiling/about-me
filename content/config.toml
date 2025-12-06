@@ -62,7 +62,13 @@ target = "services"
 href = "/services"
 
 [[navigation]]
-title = "CV"
+title = "People"
 type = "page"
+target = "people"
+href = "/people"
+
+[[navigation]]
+title = "CV"
+type = "link"
 target = "cv"
 href = "https://virgiling.wiki/cv/cv.pdf"
