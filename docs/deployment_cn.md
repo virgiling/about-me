@@ -68,11 +68,11 @@
 
     你的所有更改都需要在 `publish` 分支下做
 
-3. **设置 Github Pages**
+3. **设置 GitHub Pages**
 
     *   进入仓库的 **Settings** (设置)。
     *   在左侧栏找到 **Pages**。
-    *   在 **Build and deployment** 下，确保来源选择的是 "Github Actions"。
+    *   在 **Build and deployment** 下，确保来源选择的是 "GitHub Actions"。
 
 4. **大功告成**
 
@@ -83,7 +83,7 @@
     git commit -am "update message"
     git push --set-upstream origin publish
     ```
-    进行提交，随后 Github Actions 会自动触发构建，并部署你的 GitHub Pages
+    进行提交，随后 GitHub Actions 会自动触发构建，并部署你的 GitHub Pages
     
     访问 `https://你的用户名.github.io`，欣赏你的新网站吧！ 
 
