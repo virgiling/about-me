@@ -4,8 +4,12 @@ content = "I just graduated from Northeast Normal University as an outstanding g
 
 [[news]]
 date = "2023-09"
-content = "I will start to pursuing a master degree in Computer Science at Northeast Normal University."
+content = "I will start pursuing a master degree in Computer Science at Northeast Normal University."
 
 [[news]]
 date = "2023-06"
 content = "I went to Institute of Computing Technology, Chinese Academy of Sciences as a visiting student."
+
+[[news]]
+date = "2022-03"
+content = "I started to build blog to record my thoughts and LIFE"

@@ -3,6 +3,18 @@ title = "Services"
 description = "Professional services and community involvement."
 
 [[items]]
+title = "Teaching Assistant"
+subtitle = "School of Information Science and Technology, Northeast Normal University"
+date = "2024"
+content = "Algorithm & Computer Programming"
+
+[[items]]
+title = "Research Intern"
+subtitle = "Chinese Academy of Sciences"
+date = "2024"
+content = ""
+
+[[items]]
 title = "Visiting Student"
 subtitle = "Institute of Computing Technology, Chinese Academy of Sciences"
 date = "2023"
