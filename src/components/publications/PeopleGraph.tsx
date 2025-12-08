@@ -9,6 +9,8 @@ import { Publication } from '@/types/publication';
 import { PublicationPageConfig } from '@/types/page';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
+import { ForceGraphMethods } from 'react-force-graph-2d';
+import { forceManyBody } from 'd3-force';
 
 const NoSSRForceGraph = dynamic(() => import('@/lib/NoSSRGraph'), {
     ssr: false
@@ -78,7 +80,7 @@ function processPublications(publications: Publication[]): {
         }
     }
 
-    const MAX_NODE_RADIUS = 8;
+    const MAX_NODE_RADIUS = 4;
     const MIN_NODE_RADIUS = 2;
     const maxPublications = Math.max(1, ...Array.from(authorMap.values()).map(p => p.publicationsCount));
     const scalingFactor = (MAX_NODE_RADIUS - MIN_NODE_RADIUS) / (maxPublications - 1 || 1);
@@ -122,8 +124,31 @@ interface ForceNetworkGraphProps {
 }
 
 function ForceNetworkGraph({ data, width, height }: ForceNetworkGraphProps) {
+    const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        const checkDarkMode = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+        checkDarkMode();
+        const observer = new MutationObserver(checkDarkMode);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        return () => observer.disconnect();
+    }, []);
+
+    const forceRef = useRef<ForceGraphMethods>(undefined);
+
+    useEffect(() => {
+        const fg = forceRef.current
+        if (fg == undefined) {
+            return;
+        }
+        fg.d3Force("charge", forceManyBody().strength(-500));
+    }, [])
+
     return (
         <NoSSRForceGraph
+            ref={forceRef}
             graphData={data}
             height={height}
             width={width}
@@ -131,27 +156,28 @@ function ForceNetworkGraph({ data, width, height }: ForceNetworkGraphProps) {
             nodeAutoColorBy="group"
             nodeCanvasObject={(node, ctx, globalScale) => {
                 const label = node.name || node.id;
-                const fontSize = 12 / globalScale;
+                const fontSize = 14 / globalScale;
                 ctx.font = `${fontSize}px Sedan SC`;
                 ctx.textAlign = 'center';
-                ctx.textBaseline = 'top';
-                ctx.fillStyle = "black";
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = isDark ? "#E5E5E5" : "#171717";
                 ctx.fillText(label, node.x as number, node.y as number);
             }
             }
-            nodeColor={node => node.isHighlighted ? "#B7410E" : '#66a5ed'}
+            nodeColor={node => node.isHighlighted ? "#B7410E" : (isDark ? '#3b82f6' : '#66a5ed')}
             nodeCanvasObjectMode={() => 'after'}
             nodeVal={node => node.r}
-            nodeRelSize={4}
-            linkColor={"#607d8b"}
+            linkColor={() => isDark ? "#404040" : "#cbd5e1"}
             linkCurvature={0.1}
-            linkWidth={1.2}
+            linkWidth={edge => edge.weight}
             linkHoverPrecision={5}
             backgroundColor="transparent"
-            d3AlphaDecay={0.01}
-            d3VelocityDecay={0.3}
-            warmupTicks={50}
-            cooldownTicks={300}
+            d3AlphaDecay={0.02}
+            d3VelocityDecay={0.4}
+            cooldownTicks={100}
+            onEngineStop={() => {
+                forceRef.current?.zoomToFit(400, 50);
+            }}
             enableZoomInteraction
             enableNodeDrag
             enablePanInteraction

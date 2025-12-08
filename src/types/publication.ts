@@ -27,6 +27,7 @@ export interface Publication {
   arxivId?: string;
   pmid?: string;
   url?: string;
+  ccfFlag?: CCFFlag;
   slides?: string;
   code?: string;
   pdfUrl?: string;
@@ -79,4 +80,10 @@ export type ResearchArea =
   | 'transformer-architectures'
   | 'biomedical-engineering'
   | 'other';
+
+export type CCFFlag =
+  | 'CCF-A'
+  | 'CCF-B'
+  | 'CCF-C'
+  | 'CCF-None'
 

@@ -1,4 +1,4 @@
-import { Publication, PublicationType, ResearchArea } from '@/types/publication';
+import { CCFFlag, Publication, PublicationType, PublicationStatus, ResearchArea } from '@/types/publication';
 import { getConfig } from './config';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -70,7 +70,7 @@ export function parseBibTeX(bibtexContent: string): Publication[] {
       year,
       month: monthMapping[tags.month?.toLowerCase()] ? String(month) : tags.month,
       type,
-      status: 'published',
+      status: tags.status as PublicationStatus || 'published',
       tags: keywords,
       keywords,
       researchArea: detectResearchArea(tags.title, keywords),
@@ -87,6 +87,7 @@ export function parseBibTeX(bibtexContent: string): Publication[] {
       pdfUrl: tags.pdfUrl,
       slides: tags.slides,
       code: tags.code,
+      ccfFlag: tags.ccfFlag as CCFFlag,
       abstract: cleanBibTeXString(tags.abstract),
       description: cleanBibTeXString(tags.description || tags.note),
       selected,

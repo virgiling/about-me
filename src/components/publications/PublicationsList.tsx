@@ -29,6 +29,13 @@ export default function PublicationsList({ config, publications, embedded = fals
     const [expandedBibtexId, setExpandedBibtexId] = useState<string | null>(null);
     const [expandedAbstractId, setExpandedAbstractId] = useState<string | null>(null);
 
+    const CCFTag2Color = {
+        'CCF-A': '#EE8385',
+        'CCF-B': '#FDD966',
+        'CCF-C': '#8ED08D',
+        'CCF-None': '#ADB5BD'
+    }
+
     // Extract unique years and types for filters
     const years = useMemo(() => {
         const uniqueYears = Array.from(new Set(publications.map(p => p.year)));
@@ -212,7 +219,17 @@ export default function PublicationsList({ config, publications, embedded = fals
                                 )}
                                 <div className="flex-grow">
                                     <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary mb-2 leading-tight`}>
-                                        {pub.title}
+                                        <span className="mr-1">{pub.title}</span>
+                                        {pub.ccfFlag && (
+                                            <span
+                                                className="inline-block ml-2 px-1.5 py-1 rounded text-[10px] font-bold text-white whitespace-nowrap leading-none align-[0.125rem]"
+                                                style={{
+                                                    backgroundColor: CCFTag2Color[pub.ccfFlag] || CCFTag2Color['CCF-None']
+                                                }}
+                                            >
+                                                {pub.ccfFlag}
+                                            </span>
+                                        )}
                                     </h3>
                                     <p className={`${embedded ? "text-sm" : "text-base"} text-neutral-600 dark:text-neutral-400 mb-2`}>
                                         {pub.authors.map((author, idx) => (
@@ -227,9 +244,17 @@ export default function PublicationsList({ config, publications, embedded = fals
                                             </span>
                                         ))}
                                     </p>
-                                    <p className="text-sm font-medium text-neutral-800 dark:text-neutral-600 mb-3">
-                                        {pub.journal || pub.conference} {pub.year}
-                                    </p>
+
+                                    {pub.status == 'published' ? (
+                                        <p className="text-sm font-medium text-neutral-800 dark:text-neutral-600 mb-3">
+                                            {pub.journal || pub.conference} {pub.year}
+                                        </p>
+                                    ) :
+                                        (<p className="text-sm font-medium italic text-neutral-800 dark:text-neutral-600 mb-3">
+                                            * {pub.status.toLocaleUpperCase().replace("-", " ")}
+                                        </p>)
+                                    }
+
 
                                     {pub.description && (
                                         <p className="text-sm text-neutral-600 dark:text-neutral-500 mb-4 line-clamp-3">
