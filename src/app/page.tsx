@@ -65,7 +65,7 @@ function loadPageDataForLocale(locale: string | undefined): HomePageLocaleData {
   const localeConfig = getConfig(locale);
   const enableOnePageMode = localeConfig.features.enable_one_page_mode;
 
-  const aboutConfig = getPageConfig<{ profile?: { research_interests?: string[] }; sections?: SectionConfig[] }>('about', locale);
+  const aboutConfig = getPageConfig<{ profile?: { research_interests?: [string, string][] }; sections?: SectionConfig[] }>('about', locale);
   const researchInterests = aboutConfig?.profile?.research_interests;
 
   let pagesToShow: PageData[] = [];

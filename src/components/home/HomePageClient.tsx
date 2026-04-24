@@ -35,7 +35,7 @@ export interface HomePageLocaleData {
   social: SiteConfig['social'];
   features: SiteConfig['features'];
   enableOnePageMode?: boolean;
-  researchInterests?: string[];
+  researchInterests?: [string, string][];
   pagesToShow: PageData[];
 }
 
