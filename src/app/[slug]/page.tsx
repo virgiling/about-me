@@ -2,10 +2,6 @@ import { notFound } from 'next/navigation';
 import { getPageConfig, getMarkdownContent, getBibtexContent } from '@/lib/content';
 import { getConfig } from '@/lib/config';
 import { parseBibTeX } from '@/lib/bibtexParser';
-import PublicationsList from '@/components/publications/PublicationsList';
-import PeopleGraph from '@/components/publications/PeopleGraph';
-import TextPage from '@/components/pages/TextPage';
-import CardPage from '@/components/pages/CardPage';
 import DynamicPageClient, { type DynamicPageLocaleData } from '@/components/pages/DynamicPageClient';
 import {
   BasePageConfig,
