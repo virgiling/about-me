@@ -2,13 +2,13 @@
 title = "Virgil's Home Page"
 description = "A Master Student in Northeast Normal University"
 favicon = "/favicon.png"
-last_updated = "Dec 7, 2025"
+last_updated = "Apr 24, 2026"
 
 [author]
 name = "Dian Ling"
 title = "Master Student"
 institution = "Northeast Normal University"
-avatar = "/bio.png"
+avatar = "/bio.jpg"
 
 [social]
 # Contact information (leave blank or delete to hide)
@@ -30,6 +30,22 @@ github = "https://github.com/virgiling"
 enable_likes = false
 # Display all subpages on a single page
 enable_one_page_mode = false
+
+[i18n]
+enabled = false
+locales = ["zh", "en"]
+default_locale = "en"
+# "auto" means the locale will be determined by the browser's language setting, "fixed" means the locale will be fixed to the default locale (but can be switched still, if you want to disable, set "enable=false")
+mode = "auto"
+fixed_locale = "en"
+# If true, PRISM will remember user's language preference in browser's localStorage
+persist = true
+# Show a language switcher on the top right corner
+switcher = true
+
+[i18n.labels]
+zh = "中文"
+en = "English"
 
 [[navigation]]
 title = "About"

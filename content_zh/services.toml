@@ -1,0 +1,21 @@
+type = "card"
+title = "学术服务"
+description = "我参与的学术服务与社区参与。"
+
+[[items]]
+title = "助教"
+subtitle = "信息科学技术学院，东北师范大学"
+date = "2024"
+content = "算法与程序设计"
+
+[[items]]
+title = "研究实习生"
+subtitle = "中关村实验室"
+date = "2024"
+content = ""
+
+[[items]]
+title = "访问学生"
+subtitle = "中国科学院计算技术研究所"
+date = "2023"
+content = "研究了稀疏矩阵在AI编译器中的应用和重要性"

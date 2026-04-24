@@ -1,0 +1,60 @@
+[site]
+title = "凌典的个人主页"
+description = "东北师范大学-硕士"
+last_updated = "2026年4月24日"
+
+[author]
+name = "凌典"
+title = "硕士生"
+institution = "东北师范大学"
+
+[social]
+email = "virgiling7@gmail.com"
+blog = "virgiling.wiki"
+# location = "长春，中国"
+# location_details = ["东北师范大学，信息科学技术学院", "长春，中国"]
+google_scholar = "https://scholar.google.com/citations?user=2KON72wAAAAJ&hl=en"
+orcid = "https://orcid.org/0009-0008-0378-7546"
+github = "https://github.com/virgiling"
+
+[[navigation]]
+title = "关于"
+type = "page"
+target = "about"
+href = "/"
+
+[[navigation]]
+title = "论文"
+type = "page"
+target = "publications"
+href = "/publications"
+
+# [[navigation]]
+# title = "教学"
+# type = "page"
+# target = "teaching"
+# href = "/teaching"
+
+[[navigation]]
+title = "奖项"
+type = "page"
+target = "awards"
+href = "/awards"
+
+[[navigation]]
+title = "服务"
+type = "page"
+target = "services"
+href = "/services"
+
+[[navigation]]
+title = "合作者"
+type = "page"
+target = "people"
+href = "/people"
+
+[[navigation]]
+title = "简历"
+type = "page"
+target = "cv"
+href = "https://virgiling.wiki/cv/cv.pdf"
