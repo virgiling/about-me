@@ -33,10 +33,12 @@ export default function PublicationsList({ config, publications, embedded = fals
 
     const CCFTag2Color = {
         'CCF-A': '#EE8385',
-        'CCF-B': '#FDD966',
+        'CCF-B': '#C99E14',
         'CCF-C': '#8ED08D',
         'CCF-None': '#ADB5BD'
     }
+
+    const status = (pub: Publication) => pub.status == 'published' || pub.status == 'accepted';
 
     // Extract unique years and types for filters
     const years = useMemo(() => {
@@ -224,12 +226,17 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         <span className="mr-1">{pub.title}</span>
                                         {pub.ccfFlag && (
                                             <span
-                                                className="inline-block ml-2 px-1.5 py-1 rounded text-[10px] font-bold text-white whitespace-nowrap leading-none align-[0.125rem]"
+                                                className="inline-block ml-2 px-1.5 py-1 rounded text-[10px] font-bold text-gray-100 whitespace-nowrap leading-none align-[0.125rem]"
                                                 style={{
                                                     backgroundColor: CCFTag2Color[pub.ccfFlag] || CCFTag2Color['CCF-None']
                                                 }}
                                             >
                                                 {pub.ccfFlag}
+                                            </span>
+                                        )}
+                                        {pub.researchArea && (
+                                            <span className="inline-block ml-2 px-1.5 py-1 rounded text-[10px] font-bold whitespace-nowrap leading-none align-[0.125rem] text-black bg-gray-200">
+                                                {pub.researchArea}
                                             </span>
                                         )}
                                     </h3>
@@ -247,9 +254,9 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         ))}
                                     </p>
 
-                                    {pub.status == 'published' ? (
+                                    {status(pub) ? (
                                         <p className="text-sm font-medium text-neutral-800 dark:text-neutral-600 mb-3">
-                                            {pub.journal || pub.conference} {pub.year}
+                                            {pub.journal || pub.conference}  '{pub.year}
                                         </p>
                                     ) :
                                         (<p className="text-sm font-medium italic text-neutral-800 dark:text-neutral-600 mb-3">
@@ -261,6 +268,12 @@ export default function PublicationsList({ config, publications, embedded = fals
                                     {pub.description && (
                                         <p className="text-sm text-neutral-600 dark:text-neutral-500 mb-4 line-clamp-3">
                                             {pub.description}
+                                        </p>
+                                    )}
+
+                                    {status(pub) && pub.type == "journal" && (
+                                        <p className="text-sm text-neutral-600 dark:text-neutral-500 mb-4 line-clamp-3">
+                                            Volume {pub.volume}, Issue {pub.issue}, Pages {pub.pages}
                                         </p>
                                     )}
 

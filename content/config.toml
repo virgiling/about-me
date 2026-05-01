@@ -2,7 +2,7 @@
 title = "Virgil's Home Page"
 description = "A Master Student in Northeast Normal University"
 favicon = "/favicon.png"
-last_updated = "Apr 24, 2026"
+last_updated = "May 1, 2026"
 
 [author]
 name = "Dian Ling"
@@ -59,12 +59,6 @@ type = "page"
 target = "publications"
 href = "/publications"
 
-# [[navigation]]
-# title = "Teaching"
-# type = "page"
-# target = "teaching"
-# href = "/teaching"
-
 [[navigation]]
 title = "Awards"
 type = "page"
@@ -72,10 +66,10 @@ target = "awards"
 href = "/awards"
 
 [[navigation]]
-title = "Services"
+title = "Experience"
 type = "page"
-target = "services"
-href = "/services"
+target = "expr"
+href = "/expr"
 
 [[navigation]]
 title = "People"

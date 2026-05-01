@@ -73,7 +73,7 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
       status: tags.status as PublicationStatus || 'published',
       tags: keywords,
       keywords,
-      researchArea: detectResearchArea(tags.title, keywords),
+      researchArea: tags.researchArea as ResearchArea || detectResearchArea(tags.title, keywords),
 
       // Optional fields
       journal: cleanBibTeXString(tags.journal),
