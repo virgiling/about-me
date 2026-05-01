@@ -256,7 +256,7 @@ export default function PublicationsList({ config, publications, embedded = fals
 
                                     {status(pub) ? (
                                         <p className="text-sm font-medium text-neutral-800 dark:text-neutral-600 mb-3">
-                                            {pub.journal || pub.conference}  '{pub.year}
+                                            {pub.journal || pub.conference}  &apos;{pub.year}
                                         </p>
                                     ) :
                                         (<p className="text-sm font-medium italic text-neutral-800 dark:text-neutral-600 mb-3">
