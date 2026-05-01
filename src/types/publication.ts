@@ -79,6 +79,8 @@ export type ResearchArea =
   | 'neural-networks'
   | 'transformer-architectures'
   | 'biomedical-engineering'
+  | 'SAT'
+  | 'Combination & Optimization Problem'
   | 'other';
 
 export type CCFFlag =

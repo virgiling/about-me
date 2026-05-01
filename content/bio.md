@@ -3,5 +3,3 @@ I am now a third-year Master Student at Northeast Normal University(NENU), major
 Before that, I received my Bachelor’s Degree in Computer Science from School of Information Science and Technology, Northeast Normal University.
 
 My research interest lies in (Parallel) Automated Reasoning, SAT basically and Heuristic Search.
-
-I am currently seeking PhD position in automated reasoning, with a primary focus on opportunities in Europe and America.
