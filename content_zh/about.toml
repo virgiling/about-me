@@ -26,7 +26,7 @@ title = "关于我"
 [[sections]]
 id = "featured_publications"
 type = "publications"
-title = "发表论文合集"
+title = "论文合集"
 filter = "selected"
 limit = 5
 
