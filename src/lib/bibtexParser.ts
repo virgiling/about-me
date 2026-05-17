@@ -1,6 +1,8 @@
 import { CCFFlag, Publication, PublicationType, PublicationStatus, ResearchArea } from '@/types/publication';
 import { getConfig } from './config';
 import { getRuntimeI18nConfig } from './i18n/config';
+import { parseBibTeXInline } from './bibtexInline';
+import { getTomlContent } from './content';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const bibtexParse = require('bibtex-parse-js');
@@ -35,16 +37,31 @@ const monthMapping: Record<string, number> = {
   dec: 12, december: 12,
 };
 
+interface Collaborator {
+  name: string;
+  avatar?: string;
+  researchInterest?: string[];
+  bio?: string;
+  homepage?: string;
+}
+
 export function parseBibTeX(bibtexContent: string, locale?: string): Publication[] {
   const highlightNames = getHighlightNames(locale);
   const entries = bibtexParse.toJSON(bibtexContent);
+
+  // Parsing collaborators.toml
+  const collaboratorDict: { [key: string]: Collaborator } =
+    (getTomlContent<{ people: Collaborator[] }>("collaborators.toml")?.people ?? [])
+      .reduce((dict, person) => {
+        dict[person.name] = person;
+        return dict;
+      }, {} as { [key: string]: Collaborator });
 
   return entries.map((entry: { entryType: string; citationKey: string; entryTags: Record<string, string> }, index: number) => {
     const tags = entry.entryTags;
 
     // Parse authors
-    const authors = parseAuthors(tags.author || '', highlightNames);
-
+    const authors = parseAuthors(tags.author || '', collaboratorDict, highlightNames);
     // Parse year and month
     const year = parseInt(tags.year) || new Date().getFullYear();
     const monthStr = tags.month?.toLowerCase() || '';
@@ -61,11 +78,13 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
 
     // Parse preview field (remove braces if present)
     const preview = tags.preview?.replace(/[{}]/g, '');
+    const title = parseBibTeXInline(tags.title || 'Untitled');
 
     // Create publication object
     const publication: Publication = {
       id: entry.citationKey || tags.id || `pub-${Date.now()}-${index}`,
-      title: cleanBibTeXString(tags.title || 'Untitled'),
+      title: title.plainText || 'Untitled',
+      titleNodes: title.nodes,
       authors,
       year,
       month: monthMapping[tags.month?.toLowerCase()] ? String(month) : tags.month,
@@ -173,7 +192,7 @@ function buildNameVariants(name: string): Set<string> {
   return variants;
 }
 
-function parseAuthors(authorsStr: string, highlightNames: string[]): Array<{ name: string; isHighlighted?: boolean; isCorresponding?: boolean; isCoAuthor?: boolean }> {
+function parseAuthors(authorsStr: string, collaboratorDict: { [key: string]: Collaborator }, highlightNames: string[]): Array<{ name: string; isHighlighted?: boolean; isCorresponding?: boolean; isCoAuthor?: boolean; homepage?: string; }> {
   if (!authorsStr) return [];
 
   const highlightTextCandidates = new Set<string>();
@@ -226,6 +245,7 @@ function parseAuthors(authorsStr: string, highlightNames: string[]): Array<{ nam
         isHighlighted,
         isCorresponding,
         isCoAuthor,
+        homepage: collaboratorDict[name]?.homepage,
       };
     })
     .filter(author => author.name);
@@ -234,37 +254,7 @@ function parseAuthors(authorsStr: string, highlightNames: string[]): Array<{ nam
 function cleanBibTeXString(str?: string): string {
   if (!str) return '';
 
-  // Remove outer quotes if present
-  let cleaned = str.replace(/^["']|["']$/g, '');
-
-  // Handle nested braces more carefully
-  // First remove double braces {{content}} -> content
-  cleaned = cleaned.replace(/\{\{([^}]*)\}\}/g, '$1');
-
-  // Remove single braces {content} -> content, but be careful with nesting
-  while (cleaned.includes('{') && cleaned.includes('}')) {
-    const beforeLength = cleaned.length;
-    cleaned = cleaned.replace(/\{([^{}]*)\}/g, '$1');
-    // If no change was made, break to avoid infinite loop
-    if (cleaned.length === beforeLength) break;
-  }
-
-  // Remove any remaining single braces
-  cleaned = cleaned.replace(/[{}]/g, '');
-
-  // Handle LaTeX commands (basic)
-  cleaned = cleaned.replace(/\\textbf{([^}]*)}/g, '$1');
-  cleaned = cleaned.replace(/\\emph{([^}]*)}/g, '$1');
-  cleaned = cleaned.replace(/\\cite{[^}]*}/g, '');
-  cleaned = cleaned.replace(/~/g, ' ');
-
-  // Remove remaining backslashes
-  cleaned = cleaned.replace(/\\/g, '');
-
-  // Remove extra spaces and newlines
-  cleaned = cleaned.replace(/\s+/g, ' ').trim();
-
-  return cleaned;
+  return parseBibTeXInline(str).plainText;
 }
 
 function detectResearchArea(title: string, keywords: string[]): ResearchArea {

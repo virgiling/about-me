@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Publication } from '@/types/publication';
 import { useMessages } from '@/lib/i18n/useMessages';
+import FormattedBibTeXText from '@/components/publications/FormattedBibTeXText';
 
 interface SelectedPublicationsProps {
     publications: Publication[];
@@ -42,13 +43,21 @@ export default function SelectedPublications({ publications, title, enableOnePag
                             className="bg-neutral-50 dark:bg-neutral-800 p-4 rounded-lg shadow-sm border border-neutral-200 dark:border-[rgba(148,163,184,0.24)] hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
                         >
                             <h3 className="font-semibold text-primary mb-2 leading-tight">
-                                {pub.title}
+                                <FormattedBibTeXText nodes={pub.titleNodes} fallback={pub.title} />
                             </h3>
                             <p className="text-sm text-neutral-600 dark:text-neutral-500 mb-1">
                                 {pub.authors.map((author, idx) => (
                                     <span key={idx}>
                                         <span className={`${author.isHighlighted ? 'font-semibold text-accent' : ''} ${author.isCoAuthor ? `underline underline-offset-4 ${author.isHighlighted ? 'decoration-accent' : 'decoration-neutral-400'}` : ''}`}>
-                                            {author.name}
+                                            {author.homepage && !author.isHighlighted ? (
+                                                <a
+                                                    href={author.homepage}
+                                                    className='hover:underline'
+                                                    target="_blank"
+                                                >
+                                                    {author.name}
+                                                </a>
+                                            ) : author.name}
                                         </span>
                                         {author.isCorresponding && (
                                             <sup className={`ml-0 ${author.isHighlighted ? 'text-accent' : 'text-neutral-600 dark:text-neutral-500'}`}>†</sup>

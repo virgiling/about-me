@@ -1,5 +1,6 @@
 export interface Author {
   name: string;
+  avatar?: string;
   isMainAuthor?: boolean;
   affiliation?: string;
   email?: string;
@@ -7,11 +8,23 @@ export interface Author {
   isHighlighted?: boolean;
   isCorresponding?: boolean;
   isCoAuthor?: boolean;
+  researchInterest?: string[];
+  bio?: string;
+  homepage?: string;
 }
+
+
+export type BibTeXInlineNode =
+  | { type: 'text'; text: string }
+  | {
+    type: 'em' | 'strong' | 'smallCaps' | 'sup' | 'sub';
+    children: BibTeXInlineNode[];
+  };
 
 export interface Publication {
   id: string;
   title: string;
+  titleNodes?: BibTeXInlineNode[];
   authors: Author[];
   abstract?: string;
   journal?: string;
@@ -82,7 +95,6 @@ export type ResearchArea =
   | 'SAT'
   | 'Combination & Optimization Problem'
   | 'other';
-
 export type CCFFlag =
   | 'CCF-A'
   | 'CCF-B'

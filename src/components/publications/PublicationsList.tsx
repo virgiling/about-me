@@ -15,6 +15,7 @@ import { Publication } from '@/types/publication';
 import { PublicationPageConfig } from '@/types/page';
 import { cn } from '@/lib/utils';
 import { useMessages } from '@/lib/i18n/useMessages';
+import FormattedBibTeXText from './FormattedBibTeXText';
 
 interface PublicationsListProps {
     config: PublicationPageConfig;
@@ -223,7 +224,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                 )}
                                 <div className="flex-grow">
                                     <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary mb-2 leading-tight`}>
-                                        <span className="mr-1">{pub.title}</span>
+                                        <span className="mr-1"><FormattedBibTeXText nodes={pub.titleNodes} fallback={pub.title} /></span>
                                         {pub.ccfFlag && (
                                             <span
                                                 className="inline-block ml-2 px-1.5 py-1 rounded text-[10px] font-bold text-gray-100 whitespace-nowrap leading-none align-[0.125rem]"
@@ -244,7 +245,15 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         {pub.authors.map((author, idx) => (
                                             <span key={idx}>
                                                 <span className={`${author.isHighlighted ? 'font-semibold text-accent' : ''} ${author.isCoAuthor ? `underline underline-offset-4 ${author.isHighlighted ? 'decoration-accent' : 'decoration-neutral-400'}` : ''}`}>
-                                                    {author.name}
+                                                    {author.homepage && !author.isHighlighted ? (
+                                                        <a
+                                                            href={author.homepage}
+                                                            className='hover:underline'
+                                                            target="_blank"
+                                                        >
+                                                            {author.name}
+                                                        </a>
+                                                    ) : author.name}
                                                 </span>
                                                 {author.isCorresponding && (
                                                     <sup className={`ml-0 ${author.isHighlighted ? 'text-accent' : 'text-neutral-600 dark:text-neutral-400'}`}>†</sup>
@@ -366,10 +375,11 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                 exit={{ opacity: 0, height: 0 }}
                                                 className="overflow-hidden mt-4"
                                             >
-                                                <div className="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
-                                                    <p className="text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed">
-                                                        {pub.abstract}
-                                                    </p>
+                                                <div className="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700 text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed">
+                                                    {pub.abstract.split('<br>').map((part, i) => (
+                                                        <p key={i} className='m-2'>{part.trim()}
+                                                        </p>
+                                                    ))}
                                                 </div>
                                             </motion.div>
                                         ) : null}
