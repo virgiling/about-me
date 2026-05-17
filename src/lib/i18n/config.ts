@@ -47,9 +47,9 @@ export function getRuntimeI18nConfig(i18n?: I18nConfig): I18nRuntimeConfig {
     enabled: true,
     locales,
     defaultLocale,
-    mode,
+    mode: i18n?.mode === 'fixed' ? 'fixed' : 'auto',
     fixedLocale,
-    persist,
+    persist: i18n?.persist ?? true,
     switcher: i18n?.switcher ?? true,
     labels,
   };
