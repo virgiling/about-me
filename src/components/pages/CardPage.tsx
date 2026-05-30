@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
+import { siGithub, siGitlab, siSimpleicons, siZenodo, type SimpleIcon } from 'simple-icons';
 import { CardPageConfig } from '@/types/page';
 
 const markdownComponents = {
@@ -28,6 +29,86 @@ const markdownComponents = {
         <code className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-[0.95em]">{children}</code>
     ),
 };
+
+function getStatusBadgeClass(status: string) {
+    switch (status.trim().toLowerCase()) {
+        case 'active':
+            return 'bg-success/10 text-success border-success/20 dark:bg-success/15 dark:border-success/30';
+        case 'wip':
+        case 'work in progress':
+            return 'bg-warning/10 text-warning border-warning/20 dark:bg-warning/15 dark:border-warning/30';
+        case 'transferred':
+            return 'bg-info/10 text-info border-info/20 dark:bg-info/15 dark:border-info/30';
+        case 'archived':
+            return 'bg-neutral-100 text-neutral-600 border-neutral-200 dark:bg-neutral-800/60 dark:text-neutral-400 dark:border-neutral-700';
+        default:
+            return 'bg-neutral-100 text-neutral-600 border-neutral-200 dark:bg-neutral-800/60 dark:text-neutral-400 dark:border-neutral-700';
+    }
+}
+
+type LinkIconMeta = { icon: SimpleIcon; label: string };
+
+const fallbackLinkIcon: LinkIconMeta = {
+    icon: siSimpleicons,
+    label: 'external site',
+};
+
+const linkIconRules: Array<{ domains: string[] } & LinkIconMeta> = [
+    { domains: ['github.com'], icon: siGithub, label: siGithub.title },
+    { domains: ['gitlab.com'], icon: siGitlab, label: siGitlab.title },
+    { domains: ['zenodo.org'], icon: siZenodo, label: siZenodo.title },
+];
+
+function matchesDomain(hostname: string, domain: string) {
+    return hostname === domain || hostname.endsWith(`.${domain}`);
+}
+
+function getLinkMeta(link: string): LinkIconMeta {
+    try {
+        const hostname = new URL(link).hostname.toLowerCase().replace(/^www\./, '');
+        const rule = linkIconRules.find(({ domains }) =>
+            domains.some((domain) => matchesDomain(hostname, domain))
+        );
+
+        if (rule) {
+            return rule;
+        }
+    } catch {
+        return fallbackLinkIcon;
+    }
+
+    return fallbackLinkIcon;
+}
+
+function LinkIcon({ meta }: { meta: LinkIconMeta }) {
+    return (
+        <svg
+            className="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+        >
+            <path d={meta.icon.path} />
+        </svg>
+    );
+}
+
+function CardLink({ link, title }: { link: string; title: string }) {
+    const meta = getLinkMeta(link);
+
+    return (
+        <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${title} on ${meta.label}`}
+            title={`Open ${title} on ${meta.label}`}
+            className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-neutral-500 border border-neutral-200 bg-neutral-50 transition-colors hover:bg-accent hover:text-white hover:border-accent dark:text-neutral-400 dark:border-neutral-800 dark:bg-neutral-800/50"
+        >
+            <LinkIcon meta={meta} />
+        </a>
+    );
+}
 
 export default function CardPage({ config, embedded = false }: { config: CardPageConfig; embedded?: boolean }) {
     return (
@@ -56,13 +137,25 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
                         transition={{ duration: 0.4, delay: 0.1 * index }}
                         className={`bg-white dark:bg-neutral-900 ${embedded ? "p-4" : "p-6"} rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]`}
                     >
-                        <div className="flex justify-between items-start mb-2">
-                            <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary`}>{item.title}</h3>
-                            {item.date && (
-                                <span className="text-sm text-neutral-500 font-medium bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">
-                                    {item.date}
-                                </span>
-                            )}
+                        <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start mb-2">
+                            <div className="flex min-w-0 items-start gap-2">
+                                <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary min-w-0 break-words`}>{item.title}</h3>
+                                {item.link && (
+                                    <CardLink link={item.link} title={item.title} />
+                                )}
+                            </div>
+                            <div className="flex shrink-0 flex-wrap gap-2 sm:justify-end">
+                                {item.status && (
+                                    <span className={`inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium ${getStatusBadgeClass(item.status)}`}>
+                                        {item.status}
+                                    </span>
+                                )}
+                                {item.date && (
+                                    <span className="text-sm text-neutral-500 font-medium bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">
+                                        {item.date}
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         {item.subtitle && (
                             <p className={`${embedded ? "text-sm" : "text-base"} text-accent font-medium mb-3`}>{item.subtitle}</p>

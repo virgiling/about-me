@@ -72,10 +72,22 @@ target = "expr"
 href = "/expr"
 
 [[navigation]]
-title = "People"
+title = "Teaching"
 type = "page"
-target = "people"
-href = "/people"
+target = "teaching"
+href = "/teaching"
+
+[[navigation]]
+title = "Software"
+type = "page"
+target = "software"
+href = "/software"
+
+# [[navigation]]
+# title = "People"
+# type = "page"
+# target = "people"
+# href = "/people"
 
 [[navigation]]
 title = "CV"

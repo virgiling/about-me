@@ -1,16 +1,10 @@
 type = "card"
 title = "Experience"
-description = "Personal Research Experience and Teaching Experience."
-
-[[items]]
-title = "Teaching Assistant"
-subtitle = "School of Information Science and Technology, Northeast Normal University"
-date = "2024"
-content = "Algorithm & Computer Programming"
+description = "Personal Research Experience, Visits and Internships"
 
 [[items]]
 title = "Research Intern"
-subtitle = "Chinese Academy of Sciences"
+subtitle = "ZGC Lab"
 date = "2024"
 content = ""
 
