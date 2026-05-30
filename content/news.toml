@@ -3,8 +3,12 @@ date = "May 13, 2026"
 content = "I have completed my Master's Thesis Defense, now I become a Master. 😆"
 
 [[news]]
+date = "May 4, 2026"
+content = "Our paper on large neighborhood search for weighted total dominating set problem on massive graphs was accepted by **KBS**. 🥳"
+
+[[news]]
 date = "May 1, 2026"
-content = "Our paper on SAT with Cardinality Constraints was accepted by **IJCAI 2026**. 🥳"
+content = "Our paper on using local search for SAT with cardinality constraints was accepted by **IJCAI 2026**. 🥳"
 
 [[news]]
 date = "June 22, 2024"
