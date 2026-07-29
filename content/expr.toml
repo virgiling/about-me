@@ -2,11 +2,11 @@ type = "card"
 title = "Experience"
 description = "Personal Research Experience, Visits and Internships"
 
-[[items]]
-title = "Research Intern"
-subtitle = "ZGC Lab"
-date = "2024"
-content = ""
+# [[items]]
+# title = "Research Intern"
+# subtitle = "ZGC Lab"
+# date = "2024"
+# content = ""
 
 [[items]]
 title = "Visiting Student"
