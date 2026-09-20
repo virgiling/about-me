@@ -4,4 +4,4 @@
 
 我的研究兴趣包括 SAT、SMT（BV）、并行计算与启发式搜索。
 
-我的硕士论文《可满足性求解中基数约束算法的研究》探索了局部搜索和精确方法在求解带基数约束的 SAT 问题中的改进空间。其中局部搜索工作 "Towards Cardinality-Aware Local Search for SAT with Cardinality Constraints" 已被 IJCAI 2026 接收。
+我的硕士论文《可满足性求解中基数约束算法的研究》探索了局部搜索和精确方法在求解带基数约束的 SAT 问题中的改进空间。其中局部搜索工作 "Towards Cardinality-Aware Local Search for SAT with Cardinality Constraints" 已正式发表于 [IJCAI 2026 论文集](https://www.ijcai.org/proceedings/2026/251)。

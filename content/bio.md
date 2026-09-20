@@ -4,4 +4,4 @@ Previously, I received my Master Degree and also my Bachelor Degree at Northeast
 
 My research interest lies in SAT, SMT(BV), Parallel Computing and Heuristic Search.
 
-My master thesis, Research on Algorithms for Cardinality Constraints in Satisfiability Solving, has explored the improvement rooms for local search and exact method to solving the SAT problem with cardinality constraints. The local search paper "Towards Cardinality-Aware Local Search for SAT with Cardinality Constraints" was accepted by IJCAI 2026.
+My master thesis, Research on Algorithms for Cardinality Constraints in Satisfiability Solving, has explored the improvement rooms for local search and exact method to solving the SAT problem with cardinality constraints. The local search paper "Towards Cardinality-Aware Local Search for SAT with Cardinality Constraints" was published in the [IJCAI 2026 proceedings](https://www.ijcai.org/proceedings/2026/251).
