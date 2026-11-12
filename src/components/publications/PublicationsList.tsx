@@ -280,9 +280,9 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         </p>
                                     )}
 
-                                    {status(pub) && pub.type == "journal" && (
+                                    {status(pub) && pub.type == "journal" && (pub.volume || pub.issue || pub.pages) && (
                                         <p className="text-sm text-neutral-600 dark:text-neutral-500 mb-4 line-clamp-3">
-                                            Volume {pub.volume}, Issue {pub.issue}, Pages {pub.pages}
+                                            {[pub.volume && `Volume ${pub.volume}`, pub.issue && `Issue ${pub.issue}`, pub.pages && `Pages ${pub.pages}`].filter(Boolean).join(', ')}
                                         </p>
                                     )}
 
